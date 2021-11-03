@@ -1,0 +1,30 @@
+
+services:
+  app.node12:
+    container_name: eventstore_test_app_node12
+    image: node:12-alpine
+    links:
+      - db
+    depends_on:
+      - db
+    volumes:
+      - ./:/web
+    command: tail -f
+  app.node14:
+    container_name: eventstore_test_app_node14
+    image: node:14.16-alpine
+    links:
+      - db
+    depends_on:
+      - db
+    volumes:
+      - ./:/web
+    command: tail -f
+  db:
+    container_name: eventstore_test_db
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: user
+      POSTGRES_USER: user
+      POSTGRES_DB: eventstore_test_db
